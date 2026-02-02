@@ -14,6 +14,7 @@ import PageLoader from "./components/PageLoader.jsx";
 import useAuthUser from "./hooks/useAuthUser.js";
 import Layout from "./components/Layout.jsx";
 import { useThemeStore } from "./store/useThemeStore.js";
+import FriendCard from "./components/FriendCard.jsx";
 
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
@@ -64,6 +65,18 @@ const App = () => {
           }
         />
         <Route
+          path="/notifications"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <Layout showSidebar={true}>
+                <FriendCard />
+              </Layout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
           path="/call/:id"
           element={
             isAuthenticated && isOnboarded ? (
@@ -101,6 +114,8 @@ const App = () => {
             )
           }
         />
+
+
       </Routes>
 
       <Toaster />
